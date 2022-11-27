@@ -14,4 +14,5 @@ urlpatterns = [
     path('atualizar/<int:pk>', views.ContatoUpdateView.as_view(), name='atualiza-contato'),
     path('', views.ContatoListView.as_view(), name='home-contatos'),
     path('apaga/<int:pk>', views.ContatoDeleteView.as_view(), name='apaga-contato'),
+    path('ajax', views.verificaEmail, name = 'email-ajax')
 ]

@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from contatos.models import Pessoa
 from django.views.generic.base import View
 from contatos.forms import ContatoModel2Form
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, JsonResponse
 from django.urls.base import reverse_lazy
+import json
+from django.views.decorators.http import require_GET
 
 # Create your views here.
 
@@ -53,3 +55,19 @@ class ContatoDeleteView(View):
         pessoa = Pessoa.objects.get(pk=pk)
         pessoa.delete()
         return HttpResponseRedirect(reverse_lazy("contatos:lista-contatos"))
+
+@require_GET
+def verificaEmail(request):
+
+    if "@" not in request.GET.get('email'):
+        resposta = {
+                'emailValido':
+                    'False'
+        }
+        return JsonResponse(resposta)
+    else:
+        resposta = {
+                'emailValido':
+                    'True'
+        }
+        return JsonResponse(resposta)

@@ -8,6 +8,7 @@
 <body>
     {% include 'contatos/links.html' %}
     <h1>Cria um contato</h1>
+    <h3 id="helptext"></h3>
     <form action="" method="POST">
         <fieldset style="width: max-content;">
             <legend>Formulário de Cadastro</legend>
@@ -18,4 +19,42 @@
             <button type="submit">Cria contato</button>
         </fieldset>
     </form>
+
+    {% block javascript %}
+    <script type = "text/javascript">
+        onload = function() {
+            
+            document.getElementById('id_email').addEventListener('keyup', function(e) {
+                
+                // Recupera o campo
+                var campoEmail = document.getElementById('id_email');
+                
+                // Cria o objeto HTTP Request e abre conexão
+                var xmlhttp = new XMLHttpRequest();
+
+                xmlhttp.open("GET", "{% url 'contatos:email-ajax' %}?email=" +
+                encodeURIComponent(campoEmail.value),true);
+
+                // Função de callback
+                xmlhttp.onreadystatechange = function(){
+                if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+                    resposta = JSON.parse(xmlhttp.responseText);
+                    console.log(resposta) 
+
+                    if(resposta.emailValido == 'False'){
+                        document.getElementById('helptext').innerHTML = "Email inválido, todo email tem que ter um @!."
+                    }
+                    else{
+                        document.getElementById('helptext').innerHTML = ""
+                    }
+                }
+            };
+
+            // Envia o Request
+            xmlhttp.send(null);
+            })
+        }
+    </script>
+    {% endblock %}
+
 </body>
