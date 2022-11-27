@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page :D</title>
+</head>
+<body>
+    <h1>Home Page de Exemplos para a Web</h1>
+    <h3>Data de hoje: {{ dia }}, {{ horas }}:{{ minutos }}:{{ segundos }}</h3>
+    <h4>{{ cumprimento }}</h4>
+    <br>
+    <ul>
+        <li><a href='{% url "contatos:home-contatos" %}'>Contatos</a></li>
+        <li><a href='{% url "sec-home" %}'>Segurança</a></li>
+    </ul>
+
+</body>
+</html>
